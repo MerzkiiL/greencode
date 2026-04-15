@@ -393,20 +393,24 @@
     });
 
     // PIXEL TRAIL
-    const canvas=document.getElementById('pixel-canvas');
-    const ctx=canvas.getContext('2d');
-    function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
-    resize();window.addEventListener('resize',resize);
-    const PS=22,trail=[];
-    document.addEventListener('mousemove',e=>{
-      const gx=Math.floor(e.clientX/PS)*PS,gy=Math.floor(e.clientY/PS)*PS;
-      const last=trail[trail.length-1];
-      if(!last||last.x!==gx||last.y!==gy){trail.push({x:gx,y:gy,life:1});if(trail.length>30)trail.shift();}
+    const canvas = document.getElementById('pixel-canvas');
+    const ctx = canvas.getContext('2d');
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    resize(); window.addEventListener('resize', resize);
+    const PS = 22, trail = [];
+    document.addEventListener('mousemove', e => {
+      const gx = Math.floor(e.clientX/PS)*PS, gy = Math.floor(e.clientY/PS)*PS;
+      const last = trail[trail.length-1];
+      if (!last || last.x !== gx || last.y !== gy) { trail.push({x:gx, y:gy, life:1}); if (trail.length > 30) trail.shift(); }
     });
-    function draw(){
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      trail.forEach((p,i)=>{p.life-=0.016;if(p.life<=0)return;ctx.fillStyle=`rgba(24,201,93,${p.life*0.42*(i/trail.length)})`;ctx.fillRect(p.x,p.y,PS-2,PS-2);});
-      for(let i=trail.length-1;i>=0;i--){if(trail[i].life<=0)trail.splice(i,1);}
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      trail.forEach((p, i) => {
+        p.life -= 0.016; if (p.life <= 0) return;
+        ctx.fillStyle = `rgba(24,201,93,${p.life*0.42*(i/trail.length)})`;
+        ctx.fillRect(p.x, p.y, PS-2, PS-2);
+      });
+      for (let i = trail.length-1; i >= 0; i--) { if (trail[i].life <= 0) trail.splice(i,1); }
       requestAnimationFrame(draw);
     }
     draw();
