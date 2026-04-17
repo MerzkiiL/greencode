@@ -588,7 +588,7 @@
     document.addEventListener('touchend',e=>{const d=ty0-e.changedTouches[0].clientY;if(Math.abs(d)>40)goTo(d>0?cur_s+1:cur_s-1);});
 
     (function () {
- 
+
   // ── KONAMI SEQUENCE ──────────────────────────────────────
   const KONAMI = [
     'ArrowUp','ArrowUp','ArrowDown','ArrowDown',
@@ -596,7 +596,7 @@
     'b','a'
   ];
   let pos = 0;
- 
+
   document.addEventListener('keydown', e => {
     if (e.key === KONAMI[pos]) {
       pos++;
@@ -605,33 +605,26 @@
       pos = e.key === KONAMI[0] ? 1 : 0;
     }
   });
- 
-  // ── DARK / HACKER THEME ON MOUSE EXIT ───────────────────
+
+  // ── THEME STATE ──────────────────────────────────────────
   let hackerThemeActive = false;
- 
-  document.addEventListener('mouseleave', e => {
-    if (e.clientY <= 0 && !hackerThemeActive) {
-      hackerThemeActive = true;
-      activateHackerTheme();
-    }
-  });
- 
+
   function activateHackerTheme() {
+    if (hackerThemeActive) return;
+    hackerThemeActive = true;
     const st = document.createElement('style');
     st.id = 'gc-hacker-theme';
     st.textContent = `
-      body { background:#0a0f0b !important; color:#18c95d !important; transition: background 0.7s ease; }
+      body { background:#0a0f0b !important; color:#18c95d !important; transition:background 0.7s ease; }
       #bg  { background:#0a0f0b !important; }
       .mesh { opacity:0.04 !important; }
       .gc-title,.about-title,.sponsors-title,.faq-title,
       .location-title,.signup-title,.ph-t {
-        color:#18c95d !important;
-        -webkit-text-stroke:0px !important;
+        color:#18c95d !important; -webkit-text-stroke:0px !important;
         text-shadow:0 0 30px rgba(24,201,93,0.4);
       }
       .word-out {
-        color:#18c95d !important;
-        -webkit-text-stroke:2.5px #18c95d !important;
+        color:#18c95d !important; -webkit-text-stroke:2.5px #18c95d !important;
         filter:drop-shadow(0 0 18px rgba(24,201,93,.6)) !important;
       }
       .sub-italic,.about-body,.sponsors-sub,.sponsors-fine,
@@ -664,25 +657,27 @@
       }
     `;
     document.head.appendChild(st);
- 
-    // Small badge bottom-left
-    const badge = document.createElement('div');
-    badge.style.cssText = `
-      position:fixed;bottom:48px;left:52px;z-index:500;
-      font-family:'Space Mono',monospace;font-size:9px;
-      letter-spacing:.14em;text-transform:uppercase;
-      color:rgba(24,201,93,0.45);
-      display:flex;align-items:center;gap:6px;
-      animation:gcFadeIn .8s ease;
-    `;
-    badge.innerHTML = `
-      <div style="width:5px;height:5px;border-radius:50%;background:#18c95d;animation:pulse 1.5s ease-in-out infinite;"></div>
-      hacker mode
-    `;
-    document.body.appendChild(badge);
   }
- 
-  // ── GLOBAL STYLES (injected once) ────────────────────────
+
+  function deactivateHackerTheme() {
+    if (!hackerThemeActive) return;
+    hackerThemeActive = false;
+    const st = document.getElementById('gc-hacker-theme');
+    if (st) st.remove();
+  }
+
+  function toggleTheme() {
+    if (hackerThemeActive) deactivateHackerTheme();
+    else activateHackerTheme();
+    return hackerThemeActive;
+  }
+
+  // ── MOUSE EXIT → hacker mode ─────────────────────────────
+  document.addEventListener('mouseleave', e => {
+    if (e.clientY <= 0 && !hackerThemeActive) activateHackerTheme();
+  });
+
+  // ── GLOBAL STYLES ────────────────────────────────────────
   if (!document.getElementById('gc-style')) {
     const st = document.createElement('style');
     st.id = 'gc-style';
@@ -691,11 +686,11 @@
       @keyframes gcFadeOut { from{opacity:1} to{opacity:0} }
       @keyframes gcBlink   { 50%{opacity:0} }
       @keyframes gcGlitch  {
-        0%  { transform:translate(0);      color:#18c95d; }
-        20% { transform:translate(-3px,1px); color:#ff3333; clip-path:inset(10% 0 80% 0); }
-        40% { transform:translate(3px,-1px); color:#18c95d; clip-path:inset(60% 0 20% 0); }
-        60% { transform:translate(-2px,2px); color:#ff3333; }
-        80% { transform:translate(0);      color:#18c95d; }
+        0%  { transform:translate(0);       color:#18c95d; }
+        20% { transform:translate(-3px,1px);color:#ff3333; clip-path:inset(10% 0 80% 0); }
+        40% { transform:translate(3px,-1px);color:#18c95d; clip-path:inset(60% 0 20% 0); }
+        60% { transform:translate(-2px,2px);color:#ff3333; }
+        80% { transform:translate(0);       color:#18c95d; }
         100%{ transform:translate(0); }
       }
       .gc-blink  { animation:gcBlink .9s step-end infinite; }
@@ -703,40 +698,34 @@
     `;
     document.head.appendChild(st);
   }
- 
+
   // ── OPEN TERMINAL ────────────────────────────────────────
   function openTerminal() {
     if (document.getElementById('gc-terminal')) return;
- 
-    // Overlay
+
     const overlay = document.createElement('div');
     overlay.id = 'gc-terminal';
     overlay.style.cssText = `
-      position:fixed;inset:0;z-index:99999;
-      background:#050a06;
+      position:fixed;inset:0;z-index:99999;background:#050a06;
       display:flex;align-items:center;justify-content:center;
       animation:gcFadeIn .35s ease;
     `;
- 
-    // CRT scanlines
+
     const scanlines = document.createElement('div');
     scanlines.style.cssText = `
       position:absolute;inset:0;pointer-events:none;z-index:1;
       background:repeating-linear-gradient(
-        to bottom,
-        transparent 0px, transparent 2px,
-        rgba(0,0,0,0.16) 2px, rgba(0,0,0,0.16) 4px
+        to bottom,transparent 0px,transparent 2px,
+        rgba(0,0,0,0.16) 2px,rgba(0,0,0,0.16) 4px
       );
     `;
- 
-    // Vignette
+
     const vignette = document.createElement('div');
     vignette.style.cssText = `
       position:absolute;inset:0;pointer-events:none;z-index:2;
-      background:radial-gradient(ellipse at center, transparent 52%, rgba(0,0,0,0.72) 100%);
+      background:radial-gradient(ellipse at center,transparent 52%,rgba(0,0,0,0.72) 100%);
     `;
- 
-    // Terminal box
+
     const box = document.createElement('div');
     box.style.cssText = `
       width:min(680px,94vw);padding:40px 44px;
@@ -744,13 +733,11 @@
       background:#050a06;position:relative;z-index:3;
       box-shadow:0 0 80px rgba(24,201,93,0.07),inset 0 0 60px rgba(0,0,0,0.4);
     `;
- 
-    // Fake window chrome
+
     const chrome = document.createElement('div');
     chrome.style.cssText = `
-      display:flex;align-items:center;gap:7px;
-      margin-bottom:22px;padding-bottom:14px;
-      border-bottom:1px solid rgba(24,201,93,.1);
+      display:flex;align-items:center;gap:7px;margin-bottom:22px;
+      padding-bottom:14px;border-bottom:1px solid rgba(24,201,93,.1);
     `;
     chrome.innerHTML = `
       <div style="width:10px;height:10px;border-radius:50%;background:#ff5f57;"></div>
@@ -759,8 +746,7 @@
       <span style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;
                    color:rgba(24,201,93,.3);margin-left:8px;">GreenCode — mainframe v2.0</span>
     `;
- 
-    // Output area
+
     const pre = document.createElement('pre');
     pre.id = 'gc-pre';
     pre.style.cssText = `
@@ -768,20 +754,31 @@
       color:#18c95d;text-shadow:0 0 6px rgba(24,201,93,0.55);
       white-space:pre-wrap;margin:0;min-height:280px;
     `;
- 
-    // Hidden input
+
+    // hint line at bottom
+    const hint = document.createElement('div');
+    hint.id = 'gc-hint';
+    hint.style.cssText = `
+      font-family:'Space Mono',monospace;font-size:10px;
+      letter-spacing:.1em;color:rgba(24,201,93,0.28);
+      margin-top:18px;border-top:1px solid rgba(24,201,93,.08);
+      padding-top:12px;display:none;
+    `;
+    hint.textContent = '[T] toggle theme   [Y] exit   [N] stay';
+
     const inp = document.createElement('input');
     inp.maxLength = 1;
     inp.style.cssText = `opacity:0;position:absolute;pointer-events:none;`;
- 
+
     box.appendChild(chrome);
     box.appendChild(pre);
+    box.appendChild(hint);
     box.appendChild(inp);
     overlay.appendChild(scanlines);
     overlay.appendChild(vignette);
     overlay.appendChild(box);
     document.body.appendChild(overlay);
- 
+
     // ── SCRIPT ───────────────────────────────────────────
     const LINES = [
       { text:'> accessing GreenCode mainframe...', pause:220 },
@@ -795,12 +792,12 @@
       { text:'',                                    pause:80  },
       { text:'> Exit? [Y/N]',                       pause:0   },
     ];
- 
+
     let li = 0, ci = 0, cursor = null;
     let waitingForAnswer = false;
     let glitchTimer = null;
     let extraLines = 0;
- 
+
     const removeCursor = () => { if (cursor) { cursor.remove(); cursor = null; } };
     const addCursor = () => {
       removeCursor();
@@ -810,8 +807,7 @@
       cursor.style.cssText = 'color:#18c95d;text-shadow:0 0 8px rgba(24,201,93,0.9);';
       pre.appendChild(cursor);
     };
- 
-    // Progress bar
+
     function printProgress(cb) {
       const span = document.createElement('span');
       pre.appendChild(span);
@@ -824,38 +820,37 @@
         if (pct === 100) { clearInterval(iv); setTimeout(cb, 320); }
       }, 55);
     }
- 
-    // Type loop
+
     function typeLine() {
       if (li >= LINES.length) {
         waitingForAnswer = true;
+        hint.style.display = 'block';
         inp.style.pointerEvents = 'auto';
         inp.focus();
-        // Start glitch every 10-15s
         glitchTimer = setInterval(() => {
           pre.classList.add('gc-glitch');
           setTimeout(() => pre.classList.remove('gc-glitch'), 260);
         }, 10000 + Math.random() * 5000);
         return;
       }
- 
+
       const entry = LINES[li];
- 
+
       if (entry.text === 'PROGRESS_BAR') {
         li++; ci = 0;
         printProgress(typeLine);
         return;
       }
- 
+
       if (ci === 0) {
         removeCursor();
         const sp = document.createElement('span');
         sp.id = 'gcl-' + li;
         pre.appendChild(sp);
       }
- 
+
       const sp = document.getElementById('gcl-' + li);
- 
+
       if (ci < entry.text.length) {
         sp.textContent += entry.text[ci];
         ci++;
@@ -864,68 +859,95 @@
       } else {
         pre.appendChild(document.createTextNode('\n'));
         li++; ci = 0;
-        const pause = entry.text === '' ? 80 : entry.pause;
-        setTimeout(typeLine, pause);
+        setTimeout(typeLine, entry.text === '' ? 80 : entry.pause);
       }
     }
- 
+
     typeLine();
- 
-    // ── Y / N HANDLER ────────────────────────────────────
-    function handleAnswer(key) {
-      if (!waitingForAnswer) return;
-      const k = key.toLowerCase();
-      if (k !== 'y' && k !== 'n') return;
-      waitingForAnswer = false;
+
+    // ── PRINT A STATUS LINE ──────────────────────────────
+    function printStatus(text, color) {
       removeCursor();
- 
-      const lastId = 'gcl-' + (LINES.length - 1 + extraLines);
-      const lastEl = document.getElementById(lastId);
-      if (lastEl) lastEl.textContent = '> Exit? [Y/N] ' + key.toUpperCase();
+      const sp = document.createElement('span');
+      sp.textContent = text;
+      if (color) sp.style.color = color;
+      pre.appendChild(sp);
       pre.appendChild(document.createTextNode('\n'));
- 
-      if (k === 'y') {
-        clearInterval(glitchTimer);
-        document.removeEventListener('keydown', termKey);
-        const bye = document.createElement('span');
-        bye.textContent = '> Connection closed. See you May 30.';
-        bye.style.color = 'rgba(24,201,93,0.45)';
-        pre.appendChild(bye);
-        pre.appendChild(document.createTextNode('\n'));
-        setTimeout(() => {
-          overlay.style.animation = 'gcFadeOut .5s ease forwards';
-          setTimeout(() => overlay.remove(), 520);
-        }, 900);
- 
-      } else {
-        const nope = document.createElement('span');
-        nope.textContent = '> wise choice. stay a while.';
-        pre.appendChild(nope);
-        pre.appendChild(document.createTextNode('\n'));
-        pre.appendChild(document.createTextNode('\n'));
-        setTimeout(() => {
-          extraLines++;
-          const again = document.createElement('span');
-          again.id = 'gcl-' + (LINES.length - 1 + extraLines);
-          again.textContent = '> Exit? [Y/N]';
-          pre.appendChild(again);
-          addCursor();
-          waitingForAnswer = true;
-          inp.focus();
-        }, 700);
-      }
     }
- 
+
+    function printExitPrompt() {
+      extraLines++;
+      pre.appendChild(document.createTextNode('\n'));
+      const again = document.createElement('span');
+      again.id = 'gcl-' + (LINES.length - 1 + extraLines);
+      again.textContent = '> Exit? [Y/N]';
+      pre.appendChild(again);
+      addCursor();
+      waitingForAnswer = true;
+      inp.focus();
+    }
+
+    // ── KEY HANDLER ──────────────────────────────────────
     function termKey(e) {
       if (!waitingForAnswer) return;
+
+      // T — toggle theme
+      if (e.key === 't' || e.key === 'T') {
+        e.preventDefault();
+        const lastId = 'gcl-' + (LINES.length - 1 + extraLines);
+        const lastEl = document.getElementById(lastId);
+        if (lastEl) lastEl.textContent = '> Exit? [Y/N] T';
+        pre.appendChild(document.createTextNode('\n'));
+        waitingForAnswer = false;
+        removeCursor();
+
+        const isNowDark = toggleTheme();
+        printStatus(
+          isNowDark
+            ? '> hacker theme: ON ✦'
+            : '> hacker theme: OFF — back to normal.',
+          isNowDark ? '#18c95d' : 'rgba(24,201,93,0.5)'
+        );
+        setTimeout(printExitPrompt, 500);
+        return;
+      }
+
+      // Y / N
       if (['y','Y','n','N'].includes(e.key)) {
         e.preventDefault();
         handleAnswer(e.key);
       }
     }
+
+    function handleAnswer(key) {
+      if (!waitingForAnswer) return;
+      const k = key.toLowerCase();
+      waitingForAnswer = false;
+      removeCursor();
+
+      const lastId = 'gcl-' + (LINES.length - 1 + extraLines);
+      const lastEl = document.getElementById(lastId);
+      if (lastEl) lastEl.textContent = '> Exit? [Y/N] ' + key.toUpperCase();
+      pre.appendChild(document.createTextNode('\n'));
+
+      if (k === 'y') {
+        clearInterval(glitchTimer);
+        document.removeEventListener('keydown', termKey);
+        printStatus('> Connection closed. See you May 30.', 'rgba(24,201,93,0.4)');
+        setTimeout(() => {
+          overlay.style.animation = 'gcFadeOut .5s ease forwards';
+          setTimeout(() => overlay.remove(), 520);
+        }, 900);
+      } else {
+        printStatus('> wise choice. stay a while.');
+        setTimeout(printExitPrompt, 700);
+      }
+    }
+
     document.addEventListener('keydown', termKey);
     inp.addEventListener('input', e => { handleAnswer(e.data || ''); inp.value = ''; });
   }
+
 
 })();
   </script>
