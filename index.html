@@ -586,6 +586,228 @@
     let ty0=0;
     document.addEventListener('touchstart',e=>{ty0=e.touches[0].clientY;},{passive:true});
     document.addEventListener('touchend',e=>{const d=ty0-e.changedTouches[0].clientY;if(Math.abs(d)>40)goTo(d>0?cur_s+1:cur_s-1);});
+
+    (function () {
+  const KONAMI = [
+    'ArrowUp','ArrowUp','ArrowDown','ArrowDown',
+    'ArrowLeft','ArrowRight','ArrowLeft','ArrowRight',
+    'b','a'
+  ];
+  let pos = 0;
+ 
+  // ── Слушаем клавиши ──────────────────────────────────────
+  document.addEventListener('keydown', e => {
+    if (e.key === KONAMI[pos]) {
+      pos++;
+      if (pos === KONAMI.length) { pos = 0; openTerminal(); }
+    } else {
+      pos = e.key === KONAMI[0] ? 1 : 0;
+    }
+  });
+ 
+  // ── Создаём оверлей ──────────────────────────────────────
+  function openTerminal() {
+    if (document.getElementById('gc-terminal')) return;
+ 
+    const overlay = document.createElement('div');
+    overlay.id = 'gc-terminal';
+    overlay.style.cssText = `
+      position:fixed;inset:0;z-index:99999;
+      background:#0d1410;
+      display:flex;align-items:center;justify-content:center;
+      animation:gcFadeIn .35s ease;
+    `;
+ 
+    const box = document.createElement('div');
+    box.style.cssText = `
+      width:min(640px,92vw);
+      padding:36px 40px;
+      border:1px solid rgba(24,201,93,.25);
+      border-radius:12px;
+      background:#0d1410;
+      position:relative;
+    `;
+ 
+    const pre = document.createElement('pre');
+    pre.id = 'gc-pre';
+    pre.style.cssText = `
+      font-family:'Space Mono',monospace;
+      font-size:13px;
+      line-height:2;
+      color:#18c95d;
+      white-space:pre-wrap;
+      margin:0;
+      min-height:220px;
+    `;
+ 
+    const input = document.createElement('input');
+    input.id = 'gc-input';
+    input.maxLength = 1;
+    input.style.cssText = `
+      opacity:0;position:absolute;pointer-events:none;
+    `;
+ 
+    box.appendChild(pre);
+    box.appendChild(input);
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+ 
+    // глобальный стиль анимации (один раз)
+    if (!document.getElementById('gc-style')) {
+      const st = document.createElement('style');
+      st.id = 'gc-style';
+      st.textContent = `
+        @keyframes gcFadeIn{from{opacity:0}to{opacity:1}}
+        @keyframes gcFadeOut{from{opacity:1}to{opacity:0}}
+        #gc-terminal *{cursor:none}
+        .gc-blink{animation:gcBlink .9s step-end infinite}
+        @keyframes gcBlink{50%{opacity:0}}
+      `;
+      document.head.appendChild(st);
+    }
+ 
+    // ── Печатаем строки одну за другой ──────────────────────
+    const LINES = [
+      '> accessing GreenCode mainframe...',
+      '> verifying identity...',
+      '> identity: HACKER ✦',
+      '> welcome to the inner circle.',
+      '> ',
+      '> May 30. don\'t be late.',
+      '> ',
+      '> Exit? [Y/N]',
+    ];
+ 
+    let lineIdx = 0;
+    let charIdx = 0;
+    let cursor = null;
+    let waitingForAnswer = false;
+ 
+    function removeCursor() {
+      if (cursor) { cursor.remove(); cursor = null; }
+    }
+ 
+    function addCursor() {
+      removeCursor();
+      cursor = document.createElement('span');
+      cursor.className = 'gc-blink';
+      cursor.textContent = '█';
+      cursor.style.color = '#18c95d';
+      pre.appendChild(cursor);
+    }
+ 
+    function typeLine() {
+      if (lineIdx >= LINES.length) {
+        // Все строки напечатаны — ждём Y/N
+        waitingForAnswer = true;
+        input.style.opacity = '0';
+        input.style.pointerEvents = 'auto';
+        input.focus();
+        return;
+      }
+ 
+      const line = LINES[lineIdx];
+ 
+      if (charIdx === 0) {
+        // Начало новой строки
+        removeCursor();
+        const span = document.createElement('span');
+        span.id = 'gc-line-' + lineIdx;
+        pre.appendChild(span);
+      }
+ 
+      const span = document.getElementById('gc-line-' + lineIdx);
+ 
+      if (charIdx < line.length) {
+        span.textContent += line[charIdx];
+        charIdx++;
+        addCursor();
+        setTimeout(typeLine, charIdx === 1 ? 0 : 28 + Math.random() * 22);
+      } else {
+        // Строка закончена — перенос
+        pre.appendChild(document.createTextNode('\n'));
+        lineIdx++;
+        charIdx = 0;
+ 
+        // Небольшая пауза между строками
+        const delay = line === '' ? 80 : (line.includes('...') ? 420 : 180);
+        setTimeout(typeLine, delay);
+      }
+    }
+ 
+    typeLine();
+ 
+    // ── Обработка Y / N ─────────────────────────────────────
+    function handleAnswer(key) {
+      if (!waitingForAnswer) return;
+      const k = key.toLowerCase();
+      if (k !== 'y' && k !== 'n') return;
+ 
+      waitingForAnswer = false;
+      removeCursor();
+ 
+      // Дописываем ответ пользователя
+      const lastLine = document.getElementById('gc-line-' + (LINES.length - 1));
+      if (lastLine) lastLine.textContent = '> Exit? [Y/N] ' + key.toUpperCase();
+ 
+      pre.appendChild(document.createTextNode('\n'));
+ 
+      if (k === 'y') {
+        // Печатаем goodbye и закрываем
+        const bye = document.createElement('span');
+        bye.textContent = '> Goodbye, hacker.';
+        pre.appendChild(bye);
+        pre.appendChild(document.createTextNode('\n'));
+ 
+        setTimeout(() => {
+          overlay.style.animation = 'gcFadeOut .4s ease forwards';
+          setTimeout(() => overlay.remove(), 400);
+        }, 900);
+ 
+      } else {
+        // N — остаёмся, пишем ответ и снова ждём
+        const nope = document.createElement('span');
+        nope.textContent = '> wise choice.';
+        pre.appendChild(nope);
+        pre.appendChild(document.createTextNode('\n'));
+        pre.appendChild(document.createTextNode('\n'));
+ 
+        setTimeout(() => {
+          // Снова показываем Exit?
+          const again = document.createElement('span');
+          again.id = 'gc-line-' + LINES.length;
+          again.textContent = '> Exit? [Y/N]';
+          pre.appendChild(again);
+          addCursor();
+ 
+          // Обновляем "последний" lineIdx для следующего ответа
+          LINES.push('> Exit? [Y/N]');
+          waitingForAnswer = true;
+          input.focus();
+        }, 700);
+      }
+    }
+ 
+    // Слушаем клавиши пока терминал открыт
+    document.addEventListener('keydown', termKeydown);
+    input.addEventListener('input', e => {
+      handleAnswer(e.data || '');
+      input.value = '';
+    });
+ 
+    function termKeydown(e) {
+      if (!waitingForAnswer) return;
+      if (e.key === 'y' || e.key === 'Y' || e.key === 'n' || e.key === 'N') {
+        e.preventDefault();
+        handleAnswer(e.key);
+        // Убираем слушатель после закрытия
+        if (e.key.toLowerCase() === 'y') {
+          setTimeout(() => document.removeEventListener('keydown', termKeydown), 1000);
+        }
+      }
+    }
+  }
+})();
   </script>
 </body>
 </html>
