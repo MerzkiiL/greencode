@@ -1048,14 +1048,15 @@
     inp.addEventListener('input', e => { handleAnswer(e.data || ''); inp.value = ''; });
   }
 
-  <script>
-(function(){
+     document.addEventListener('keydown', termKey);
+    inp.addEventListener('input', e => { handleAnswer(e.data || ''); inp.value = ''; });
+  }
+
+  // ── SCREEN GLITCH every 15s in hacker mode ──────────────
   let glitchActive = false;
-
-  function doGlitch(){
-    if(glitchActive) return;
+  setInterval(() => {
+    if (!document.getElementById('gc-hacker-theme') || glitchActive) return;
     glitchActive = true;
-
     const fl = document.createElement('div');
     fl.style.cssText = `
       position:fixed;inset:0;z-index:99998;pointer-events:none;
@@ -1063,22 +1064,11 @@
       animation:gcFadeOut .08s ease forwards;
     `;
     document.body.appendChild(fl);
-
-    // Смещение всего контента
-    document.body.style.transform = 'translate(-3px, 1px)';
-    setTimeout(()=>{ document.body.style.transform = 'translate(2px,-2px)'; }, 60);
-    setTimeout(()=>{ document.body.style.transform = 'translate(-1px,1px)'; }, 110);
-    setTimeout(()=>{ document.body.style.transform = ''; fl.remove(); glitchActive = false; }, 160);
-  }
-
-  // Запускаем только когда hacker theme активна
-  setInterval(()=>{
-    if(document.getElementById('gc-hacker-theme')){
-      doGlitch();
-    }
+    document.body.style.transform = 'translate(-3px,1px)';
+    setTimeout(() => { document.body.style.transform = 'translate(2px,-2px)'; }, 60);
+    setTimeout(() => { document.body.style.transform = 'translate(-1px,1px)'; }, 110);
+    setTimeout(() => { document.body.style.transform = ''; fl.remove(); glitchActive = false; }, 160);
   }, 15000);
-})();
-</script>
 
 })();
   </script>
