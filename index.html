@@ -618,6 +618,8 @@
       body { background:#0a0f0b !important; color:#18c95d !important; transition:background 0.7s ease; }
       #bg  { background:#0a0f0b !important; }
       .mesh { opacity:0.04 !important; }
+
+      /* Titles */
       .gc-title,.about-title,.sponsors-title,.faq-title,
       .location-title,.signup-title,.ph-t {
         color:#18c95d !important; -webkit-text-stroke:0px !important;
@@ -627,14 +629,36 @@
         color:#18c95d !important; -webkit-text-stroke:2.5px #18c95d !important;
         filter:drop-shadow(0 0 18px rgba(24,201,93,.6)) !important;
       }
+
+      /* FIX: FAQ question text → green */
+      .faq-q { color:#18c95d !important; }
+      .faq-icon { color:#18c95d !important; }
+      /* FIX: FAQ answer text → green (dimmer) */
+      .faq-a-inner { color:rgba(24,201,93,0.6) !important; }
+
+      /* FIX: about-tagline (border-left label) → green */
+      .about-tagline { color:#18c95d !important; border-color:#18c95d !important; }
+
+      /* FIX: signup marquee track dots and separators */
+      .signup-mtrack span     { color:#18c95d !important; }
+      .signup-mtrack span.sep { color:rgba(24,201,93,0.4) !important; }
+
+      /* FIX: Contact box title + body */
+      .contact-box-title { color:#18c95d !important; }
+      .contact-box-body  { color:rgba(24,201,93,0.6) !important; }
+      .contact-box-body a { color:#18c95d !important; }
+
+      /* General muted text */
       .sub-italic,.about-body,.sponsors-sub,.sponsors-fine,
-      .faq-a-inner,.location-addr-street,.signup-desc,
-      .contact-box-body,.stat-lbl,.cd-lbl,.footer-copy,
+      .location-addr-street,.signup-desc,
+      .stat-lbl,.cd-lbl,.footer-copy,
       .footer-heart,.footer-links a,.location-detail-lbl {
         color:rgba(24,201,93,0.55) !important;
       }
       .stat-val,.cd-num,.location-addr-name,
-      .location-detail-val,.about-tagline { color:#18c95d !important; }
+      .location-detail-val { color:#18c95d !important; }
+
+      /* Nav */
       #topnav ul {
         background:rgba(10,15,11,0.95) !important;
         border-color:rgba(24,201,93,0.2) !important;
@@ -643,18 +667,42 @@
       .nav-link:hover,.nav-link.active { color:#18c95d !important; }
       .nav-link.active { background:rgba(24,201,93,0.12) !important; }
       .nav-cta { background:#18c95d !important; color:#0a0f0b !important; }
+
+      /* Buttons */
       .btn-fill { background:#18c95d !important; color:#0a0f0b !important; border-color:#18c95d !important; }
       .btn-line  { color:rgba(24,201,93,0.7) !important; border-color:rgba(24,201,93,0.25) !important; }
+
+      /* Boxes */
       .stat-box,.cd-block,.faq-item,.location-addr-box,
       .location-detail,.contact-box {
         background:rgba(24,201,93,0.05) !important;
         border-color:rgba(24,201,93,0.18) !important;
       }
-      #footer { background:#050a06 !important; }
       .faq-a  { background:rgba(24,201,93,0.07) !important; }
+
+      /* Footer */
+      #footer { background:#050a06 !important; }
+      .footer-links a { color:rgba(24,201,93,0.45) !important; }
+      .footer-links a:hover { color:#18c95d !important; }
+      .hcb-badge { border-color:rgba(24,201,93,0.2) !important; }
+      .hcb-badge-label { color:rgba(24,201,93,0.35) !important; }
+      .hcb-badge-name  { color:rgba(24,201,93,0.7) !important; }
+
+      /* CTA buttons */
       .signup-btn,.sponsors-cta,.location-dir-btn {
         background:#18c95d !important; color:#0a0f0b !important; border-color:#18c95d !important;
       }
+
+      /* Sec counter */
+      #sec-counter { color:rgba(24,201,93,0.35) !important; }
+      #sc-cur { color:#18c95d !important; }
+
+      /* Progress bar */
+      #progress-bar { background:#18c95d !important; }
+
+      /* Scroll hint */
+      .sc-h span { color:rgba(24,201,93,0.5) !important; }
+      .sc-h .sc-line { background:linear-gradient(to bottom,#18c95d,transparent) !important; }
     `;
     document.head.appendChild(st);
   }
@@ -677,6 +725,38 @@
     if (e.clientY <= 0 && !hackerThemeActive) activateHackerTheme();
   });
 
+  // ── KONAMI HINT (bottom-left, always visible) ────────────
+  function injectHint() {
+    const hint = document.createElement('div');
+    hint.id = 'gc-konami-hint';
+    hint.style.cssText = `
+      position:fixed;bottom:14px;left:20px;z-index:400;
+      font-family:'Space Mono',monospace;font-size:9px;
+      letter-spacing:.16em;text-transform:uppercase;
+      color:rgba(24,201,93,0.28);
+      display:flex;align-items:center;gap:7px;
+      pointer-events:none;
+      transition:opacity .3s;
+    `;
+    hint.innerHTML = `
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="8" height="8" rx="1.5"
+              stroke="rgba(24,201,93,0.4)" stroke-width="1"/>
+        <rect x="3.5" y="3.5" width="3" height="3" rx=".5"
+              fill="rgba(24,201,93,0.35)"/>
+      </svg>
+      try the classics
+    `;
+    document.body.appendChild(hint);
+  }
+
+  // Inject hint after DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', injectHint);
+  } else {
+    injectHint();
+  }
+
   // ── GLOBAL STYLES ────────────────────────────────────────
   if (!document.getElementById('gc-style')) {
     const st = document.createElement('style');
@@ -687,14 +767,25 @@
       @keyframes gcBlink   { 50%{opacity:0} }
       @keyframes gcGlitch  {
         0%  { transform:translate(0);       color:#18c95d; }
-        20% { transform:translate(-3px,1px);color:#ff3333; clip-path:inset(10% 0 80% 0); }
-        40% { transform:translate(3px,-1px);color:#18c95d; clip-path:inset(60% 0 20% 0); }
+        20% { transform:translate(-3px,1px);color:#ff3333;clip-path:inset(10% 0 80% 0); }
+        40% { transform:translate(3px,-1px);color:#18c95d;clip-path:inset(60% 0 20% 0); }
         60% { transform:translate(-2px,2px);color:#ff3333; }
         80% { transform:translate(0);       color:#18c95d; }
         100%{ transform:translate(0); }
       }
       .gc-blink  { animation:gcBlink .9s step-end infinite; }
       .gc-glitch { animation:gcGlitch 0.25s steps(1) forwards; }
+
+      /* Terminal scrollable pre */
+      #gc-pre {
+        overflow-y:auto;
+        scrollbar-width:thin;
+        scrollbar-color:rgba(24,201,93,0.2) transparent;
+      }
+      #gc-pre::-webkit-scrollbar { width:4px; }
+      #gc-pre::-webkit-scrollbar-thumb {
+        background:rgba(24,201,93,0.2);border-radius:2px;
+      }
     `;
     document.head.appendChild(st);
   }
@@ -728,16 +819,22 @@
 
     const box = document.createElement('div');
     box.style.cssText = `
-      width:min(680px,94vw);padding:40px 44px;
+      width:min(680px,94vw);
+      max-height:90vh;
+      padding:32px 40px;
       border:1px solid rgba(24,201,93,.18);border-radius:4px;
       background:#050a06;position:relative;z-index:3;
       box-shadow:0 0 80px rgba(24,201,93,0.07),inset 0 0 60px rgba(0,0,0,0.4);
+      display:flex;flex-direction:column;
     `;
 
+    // Fake window chrome
     const chrome = document.createElement('div');
     chrome.style.cssText = `
-      display:flex;align-items:center;gap:7px;margin-bottom:22px;
-      padding-bottom:14px;border-bottom:1px solid rgba(24,201,93,.1);
+      display:flex;align-items:center;gap:7px;
+      margin-bottom:20px;padding-bottom:14px;
+      border-bottom:1px solid rgba(24,201,93,.1);
+      flex-shrink:0;
     `;
     chrome.innerHTML = `
       <div style="width:10px;height:10px;border-radius:50%;background:#ff5f57;"></div>
@@ -747,24 +844,30 @@
                    color:rgba(24,201,93,.3);margin-left:8px;">GreenCode — mainframe v2.0</span>
     `;
 
+    // Output — scrollable, fixed height
     const pre = document.createElement('pre');
     pre.id = 'gc-pre';
     pre.style.cssText = `
       font-family:'Space Mono',monospace;font-size:13px;line-height:2;
       color:#18c95d;text-shadow:0 0 6px rgba(24,201,93,0.55);
-      white-space:pre-wrap;margin:0;min-height:280px;
+      white-space:pre-wrap;margin:0;
+      flex:1;
+      min-height:200px;
+      max-height:calc(90vh - 180px);
+      overflow-y:auto;
     `;
 
-    // hint line at bottom
-    const hint = document.createElement('div');
-    hint.id = 'gc-hint';
-    hint.style.cssText = `
+    // Hint bar
+    const hintBar = document.createElement('div');
+    hintBar.id = 'gc-hint-bar';
+    hintBar.style.cssText = `
       font-family:'Space Mono',monospace;font-size:10px;
       letter-spacing:.1em;color:rgba(24,201,93,0.28);
-      margin-top:18px;border-top:1px solid rgba(24,201,93,.08);
-      padding-top:12px;display:none;
+      margin-top:16px;padding-top:12px;
+      border-top:1px solid rgba(24,201,93,.08);
+      display:none;flex-shrink:0;
     `;
-    hint.textContent = '[T] toggle theme   [Y] exit   [N] stay';
+    hintBar.textContent = '[T] toggle theme   [Y] exit   [N] stay';
 
     const inp = document.createElement('input');
     inp.maxLength = 1;
@@ -772,14 +875,14 @@
 
     box.appendChild(chrome);
     box.appendChild(pre);
-    box.appendChild(hint);
+    box.appendChild(hintBar);
     box.appendChild(inp);
     overlay.appendChild(scanlines);
     overlay.appendChild(vignette);
     overlay.appendChild(box);
     document.body.appendChild(overlay);
 
-    // ── SCRIPT ───────────────────────────────────────────
+    // ── SCRIPT ─────────────────────────────────────────────
     const LINES = [
       { text:'> accessing GreenCode mainframe...', pause:220 },
       { text:'PROGRESS_BAR',                       pause:0   },
@@ -798,6 +901,7 @@
     let glitchTimer = null;
     let extraLines = 0;
 
+    const scrollBottom = () => { pre.scrollTop = pre.scrollHeight; };
     const removeCursor = () => { if (cursor) { cursor.remove(); cursor = null; } };
     const addCursor = () => {
       removeCursor();
@@ -806,6 +910,7 @@
       cursor.textContent = '█';
       cursor.style.cssText = 'color:#18c95d;text-shadow:0 0 8px rgba(24,201,93,0.9);';
       pre.appendChild(cursor);
+      scrollBottom();
     };
 
     function printProgress(cb) {
@@ -817,6 +922,7 @@
         pct = Math.min(100, pct + 4 + Math.floor(Math.random() * 6));
         const f = Math.round(pct / 5), e = 20 - f;
         span.textContent = '> [' + '#'.repeat(f) + '-'.repeat(e) + '] ' + pct + '%';
+        scrollBottom();
         if (pct === 100) { clearInterval(iv); setTimeout(cb, 320); }
       }, 55);
     }
@@ -824,7 +930,7 @@
     function typeLine() {
       if (li >= LINES.length) {
         waitingForAnswer = true;
-        hint.style.display = 'block';
+        hintBar.style.display = 'block';
         inp.style.pointerEvents = 'auto';
         inp.focus();
         glitchTimer = setInterval(() => {
@@ -865,7 +971,7 @@
 
     typeLine();
 
-    // ── PRINT A STATUS LINE ──────────────────────────────
+    // ── HELPERS ──────────────────────────────────────────
     function printStatus(text, color) {
       removeCursor();
       const sp = document.createElement('span');
@@ -873,6 +979,7 @@
       if (color) sp.style.color = color;
       pre.appendChild(sp);
       pre.appendChild(document.createTextNode('\n'));
+      scrollBottom();
     }
 
     function printExitPrompt() {
@@ -891,28 +998,22 @@
     function termKey(e) {
       if (!waitingForAnswer) return;
 
-      // T — toggle theme
       if (e.key === 't' || e.key === 'T') {
         e.preventDefault();
-        const lastId = 'gcl-' + (LINES.length - 1 + extraLines);
-        const lastEl = document.getElementById(lastId);
+        const lastEl = document.getElementById('gcl-' + (LINES.length - 1 + extraLines));
         if (lastEl) lastEl.textContent = '> Exit? [Y/N] T';
         pre.appendChild(document.createTextNode('\n'));
         waitingForAnswer = false;
         removeCursor();
-
         const isNowDark = toggleTheme();
         printStatus(
-          isNowDark
-            ? '> hacker theme: ON ✦'
-            : '> hacker theme: OFF — back to normal.',
+          isNowDark ? '> hacker theme: ON ✦' : '> hacker theme: OFF — back to normal.',
           isNowDark ? '#18c95d' : 'rgba(24,201,93,0.5)'
         );
         setTimeout(printExitPrompt, 500);
         return;
       }
 
-      // Y / N
       if (['y','Y','n','N'].includes(e.key)) {
         e.preventDefault();
         handleAnswer(e.key);
@@ -925,8 +1026,7 @@
       waitingForAnswer = false;
       removeCursor();
 
-      const lastId = 'gcl-' + (LINES.length - 1 + extraLines);
-      const lastEl = document.getElementById(lastId);
+      const lastEl = document.getElementById('gcl-' + (LINES.length - 1 + extraLines));
       if (lastEl) lastEl.textContent = '> Exit? [Y/N] ' + key.toUpperCase();
       pre.appendChild(document.createTextNode('\n'));
 
@@ -947,7 +1047,6 @@
     document.addEventListener('keydown', termKey);
     inp.addEventListener('input', e => { handleAnswer(e.data || ''); inp.value = ''; });
   }
-
 
 })();
   </script>
