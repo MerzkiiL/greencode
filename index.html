@@ -730,23 +730,14 @@
     const hint = document.createElement('div');
     hint.id = 'gc-konami-hint';
     hint.style.cssText = `
-      position:fixed;
-      bottom:19px;     /* Было 14px -> стало ~19px */
-      left:27px;       /* Было 20px -> стало ~27px */
-      z-index:400;
-      font-family:'Space Mono',monospace;
-      font-size:12px;  /* Было 9px -> стало 12px */
-      letter-spacing:.16em;
-      text-transform:uppercase;
+      position:fixed;bottom:14px;left:20px;z-index:400;
+      font-family:'Space Mono',monospace;font-size:9px;
+      letter-spacing:.16em;text-transform:uppercase;
       color:rgba(24,201,93,0.28);
-      display:flex;
-      align-items:center;
-      gap:9px;         /* Было 7px -> стало ~9px */
+      display:flex;align-items:center;gap:7px;
       pointer-events:none;
       transition:opacity .3s;
     `;
-    
-    // Увеличили width и height у SVG с 10 до 13
     hint.innerHTML = `
       <svg width="13" height="13" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="1" y="1" width="8" height="8" rx="1.5"
