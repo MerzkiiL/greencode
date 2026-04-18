@@ -727,36 +727,36 @@
 
   // ── KONAMI HINT (bottom-left, always visible) ────────────
   function injectHint() {
-  const hint = document.createElement('div');
-  hint.id = 'gc-konami-hint';
-  hint.style.cssText = `
-    position:fixed;
-    bottom:19px;     /* Было 14px -> стало ~19px */
-    left:27px;       /* Было 20px -> стало ~27px */
-    z-index:400;
-    font-family:'Space Mono',monospace;
-    font-size:12px;  /* Было 9px -> стало 12px */
-    letter-spacing:.16em;
-    text-transform:uppercase;
-    color:rgba(24,201,93,0.28);
-    display:flex;
-    align-items:center;
-    gap:9px;         /* Было 7px -> стало ~9px */
-    pointer-events:none;
-    transition:opacity .3s;
-  `;
-  
-  // Увеличили width и height у SVG с 10 до 13
-  hint.innerHTML = `
-    <svg width="13" height="13" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="1" y="1" width="8" height="8" rx="1.5"
-            stroke="rgba(24,201,93,0.4)" stroke-width="1"/>
-      <rect x="3.5" y="3.5" width="3" height="3" rx=".5"
-            fill="rgba(24,201,93,0.35)"/>
-    </svg>
-    ↑ ↑ ↓ ↓ ← → ← → B A
-  `;
-  document.body.appendChild(hint);
+    const hint = document.createElement('div');
+    hint.id = 'gc-konami-hint';
+    hint.style.cssText = `
+      position:fixed;
+      bottom:19px;     /* Было 14px -> стало ~19px */
+      left:27px;       /* Было 20px -> стало ~27px */
+      z-index:400;
+      font-family:'Space Mono',monospace;
+      font-size:12px;  /* Было 9px -> стало 12px */
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:rgba(24,201,93,0.28);
+      display:flex;
+      align-items:center;
+      gap:9px;         /* Было 7px -> стало ~9px */
+      pointer-events:none;
+      transition:opacity .3s;
+    `;
+    
+    // Увеличили width и height у SVG с 10 до 13
+    hint.innerHTML = `
+      <svg width="13" height="13" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="8" height="8" rx="1.5"
+              stroke="rgba(24,201,93,0.4)" stroke-width="1"/>
+        <rect x="3.5" y="3.5" width="3" height="3" rx=".5"
+              fill="rgba(24,201,93,0.35)"/>
+      </svg>
+      ↑ ↑ ↓ ↓ ← → ← → B A
+    `;
+    document.body.appendChild(hint);
   }
 
   // Inject hint after DOM ready
