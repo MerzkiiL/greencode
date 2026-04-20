@@ -135,6 +135,17 @@
     .contact-box-body{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:300;color:var(--gray);line-height:1.6;}
     .contact-box-body a{color:var(--g2);text-decoration:none;cursor:none;font-weight:500;transition:color .2s;}
     .contact-box-body a:hover{color:var(--g);}
+        
+    /* SPONSOR MARQUEE */
+    .sponsor-marquee-wrap{overflow:hidden;border-top:1px solid rgba(24,201,93,.12);border-bottom:1px solid rgba(24,201,93,.12);padding:18px 0;margin-bottom:28px;width:100vw;position:relative;left:50%;transform:translateX(-50%);}
+    .sponsor-track{display:flex;gap:16px;white-space:nowrap;animation:sponsorScroll 22s linear infinite;}
+    .sponsor-track:hover{animation-play-state:paused;}
+    @keyframes sponsorScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    .sponsor-slot{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;width:140px;height:72px;border-radius:10px;border:1px solid rgba(122,148,134,.22);background:rgba(122,148,134,.06);flex-shrink:0;transition:border-color .2s;}
+    .sponsor-slot:hover{border-color:rgba(24,201,93,.28);}
+    .sponsor-slot-icon{width:28px;height:28px;border-radius:50%;background:rgba(122,148,134,.15);display:flex;align-items:center;justify-content:center;}
+    .sponsor-slot-icon svg{opacity:.45;}
+    .sponsor-slot-text{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);opacity:.6;text-align:center;line-height:1.4;}
 
     /* FOOTER */
     #footer{position:fixed;bottom:0;left:50%;transform:translateX(-50%) translateY(100%);z-index:200;width:calc(100% - 64px);max-width:900px;background:var(--black);border-radius:16px 16px 0 0;padding:24px 40px;transition:transform .5s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;gap:16px;}
@@ -258,6 +269,11 @@
       <div class="sponsors-inner">
         <div class="ph-n">02 — Sponsors</div>
         <div class="sponsors-title">SPONSORS</div>
+    
+        <div class="sponsor-marquee-wrap">
+          <div class="sponsor-track" id="sponsorTrack"></div>
+        </div>
+    
         <p class="sponsors-sub">We are currently looking for sponsors to help make GreenCode happen. Interested in sponsoring? Check out our <a href="https://drive.google.com/file/d/1yOXBW3Z4lOFPFO_1a02LE2V-J45kWxLU/view?usp=sharing" target="_blank">Sponsorship Package</a> or write directly by clicking the button below.</p>
         <p class="sponsors-fine">All donations are processed through Hack Club Bank, a 501(c)(3) fiscal sponsor. Your contribution may be tax-deductible.</p>
         <a href="mailto:greenvillecode@gmail.com" class="sponsors-cta">Become a Sponsor</a>
@@ -369,6 +385,22 @@
       document.getElementById('cd-s').textContent = String(Math.floor(diff%60000/1000)).padStart(2,'0');
     }
     updateCD(); setInterval(updateCD,1000);
+
+        // SPONSOR TRACK
+    (function(){
+      const track = document.getElementById('sponsorTrack');
+      if(!track) return;
+      const iconSvg = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="7" height="7" rx="1" fill="rgba(122,148,134,0.7)"/><rect x="14" y="3" width="7" height="7" rx="1" fill="rgba(122,148,134,0.7)"/><rect x="3" y="14" width="7" height="7" rx="1" fill="rgba(122,148,134,0.7)"/><rect x="14" y="14" width="7" height="7" rx="1" fill="rgba(122,148,134,0.7)"/></svg>`;
+      // Duplicate for seamless loop
+      [1,2].forEach(()=>{
+        for(let i=0;i<6;i++){
+          const slot = document.createElement('div');
+          slot.className = 'sponsor-slot';
+          slot.innerHTML = `<div class="sponsor-slot-icon">${iconSvg}</div><div class="sponsor-slot-text">Your logo<br>could be here</div>`;
+          track.appendChild(slot);
+        }
+      });
+    })();
 
     // MAP
     const mapBox=document.getElementById('mapBox');
