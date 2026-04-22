@@ -404,9 +404,21 @@
           { type: 'placeholder' },
         ];
       
-        track.appendChild(slot);
-      });
-    });
+              // 4 повтора — достаточно для любого экрана, loop по -50%
+        [1,2,3,4].forEach(() => {
+          slots.forEach(s => {
+            const slot = document.createElement('div');
+            slot.className = 'sponsor-slot';
+            if(s.type === 'real'){
+              slot.style.cssText = 'border-color:rgba(0,143,219,0.3);background:rgba(0,143,219,0.06);';
+              slot.innerHTML = `<div style="width:68px;height:68px;display:flex;align-items:center;justify-content:center;overflow:hidden;">${s.svg}</div>`;
+            } else {
+              slot.innerHTML = `<div class="sponsor-slot-icon">${iconSvg}</div><div class="sponsor-slot-text">Your logo<br>could be here</div>`;
+            }
+            track.appendChild(slot);
+          });
+        });
+
       
         // JS-анимация вместо CSS — не останавливается при hover
         let pos = 0;
