@@ -206,58 +206,6 @@
         .map-box.expanded{height:280px;}
         #sec-counter{right:16px;}
       }
-        /* ABOUT — stat boxes без линии сверху */
-        .about-stat-box::before { display:none !important; }
-        .about-stat-box {
-          border-radius:8px !important;
-          padding:14px 22px !important;
-          min-width:120px !important;
-          cursor:pointer;
-          transition:transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s, border-color .25s, background .25s;
-          position:relative; overflow:hidden;
-        }
-        .about-stat-box::after {
-          content:''; position:absolute; inset:0;
-          background:radial-gradient(circle at var(--smx,50%) var(--smy,50%), rgba(24,201,93,.13) 0%, transparent 70%);
-          opacity:0; transition:opacity .3s; pointer-events:none;
-        }
-        .about-stat-box:hover { transform:translateY(-4px) scale(1.04); box-shadow:0 8px 24px rgba(24,201,93,.15); border-color:rgba(24,201,93,.4); background:rgba(24,201,93,.04); }
-        .about-stat-box:hover::after { opacity:1; }
-        .about-stat-box:hover .stat-val { color:var(--g2); }
-        .stat-val { transition:color .2s; }
-        
-        /* ABOUT — track cards */
-        .about-track-card {
-          border:1px solid rgba(24,201,93,.13);
-          background:rgba(24,201,93,.03);
-          border-radius:8px; padding:11px 13px;
-          cursor:none; position:relative; overflow:hidden;
-          transition:border-color .25s, background .25s, transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .25s;
-          text-align:left;
-        }
-        .about-track-card::before {
-          content:''; position:absolute; inset:0;
-          background:radial-gradient(circle at var(--tmx,50%) var(--tmy,50%), rgba(24,201,93,.14) 0%, transparent 65%);
-          opacity:0; transition:opacity .3s; pointer-events:none; z-index:0;
-        }
-        .about-track-card:hover { border-color:rgba(24,201,93,.5); background:rgba(24,201,93,.07); transform:translateY(-3px) scale(1.02); box-shadow:0 6px 20px rgba(24,201,93,.12); }
-        .about-track-card:hover::before { opacity:1; }
-        .about-track-card:active { transform:scale(.97); transition:transform .1s; }
-        .atc-inner { position:relative; z-index:1; }
-        .atc-num { font-family:'Space Mono',monospace; font-size:8px; letter-spacing:.14em; color:var(--gray2); text-transform:uppercase; margin-bottom:5px; }
-        .atc-icon { width:24px; height:24px; border-radius:5px; display:flex; align-items:center; justify-content:center; margin-bottom:6px; font-size:12px; background:rgba(24,201,93,.1); color:var(--g2); transition:background .25s, transform .3s cubic-bezier(.34,1.56,.64,1); }
-        .about-track-card:hover .atc-icon { background:rgba(24,201,93,.2); transform:scale(1.15) rotate(-4deg); }
-        .atc-title { font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--black); margin-bottom:4px; transition:color .2s; }
-        .about-track-card:hover .atc-title { color:var(--g2); }
-        .atc-body { font-family:'DM Sans',sans-serif; font-size:11px; font-weight:300; color:var(--gray); line-height:1.5; }
-        .atc-badge { display:inline-block; font-family:'Space Mono',monospace; font-size:7px; letter-spacing:.1em; text-transform:uppercase; background:rgba(24,201,93,.15); color:#0d6e36; border-radius:3px; padding:2px 6px; margin-top:4px; transition:background .2s; }
-        .about-track-card:hover .atc-badge { background:rgba(24,201,93,.28); }
-        
-        /* hacker theme fix for new cards */
-        #gc-hacker-theme ~ * .about-track-card,
-        .about-track-card { }
-
-        @keyframes atcRipple { to { transform:scale(20); opacity:0; } }
     </style>
   </head>
   <body>
@@ -307,78 +255,18 @@
       </div>
   
       <!-- ABOUT 1 -->
-        <div class="section" data-idx="1">
-          <div class="about-inner" style="max-width:860px;padding:0 48px;text-align:center;display:flex;flex-direction:column;align-items:center;">
-        
-            <div class="about-title" style="font-size:clamp(38px,6vw,72px);margin-bottom:10px;">ABOUT GREENCODE</div>
-        
-            <p class="about-body" style="font-size:clamp(13px,1.3vw,15px);margin-bottom:10px;max-width:560px;">
-              GreenCode is a 10 hour sprint for students who love to build things. We are bringing people together to see what can be made when you stop talking and start coding. Our goal is simple. We want to see what happens when you have 10 hours, a great environment, and no distractions to create something real.
-            </p>
-        
-        
-            <div class="stat-row" style="gap:12px;margin-bottom:18px;">
-              <div class="stat-box about-stat-box"><div class="stat-val">10</div><div class="stat-lbl">Hours</div></div>
-              <div class="stat-box about-stat-box"><div class="stat-val">$1000+</div><div class="stat-lbl">In Prizes</div></div>
-              <div class="stat-box about-stat-box"><div class="stat-val">35+</div><div class="stat-lbl">Hackers</div></div>
-            </div>
-        
-            <hr style="border:none;border-top:1px solid rgba(24,201,93,.12);width:100%;margin-bottom:14px;">
-        
-            <div style="text-align:center;margin-bottom:12px;">
-              <div style="font-family:'Anton',sans-serif;font-size:clamp(22px,3vw,34px);color:var(--black);letter-spacing:.02em;text-transform:uppercase;">Five ways to win.</div>
-              <div style="font-family:'DM Sans',sans-serif;font-size:12px;font-weight:300;color:var(--gray);margin-top:3px;">Pick a track — every project competes for Best Overall and Best Newcomer too.</div>
-            </div>
-        
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;margin-bottom:8px;" id="tracks-top">
-              <div class="about-track-card">
-                <div class="atc-inner">
-                  <div class="atc-num">Track 01</div>
-                  <div class="atc-icon">★</div>
-                  <div class="atc-title">Best Overall</div>
-                  <div class="atc-body">The grand prize. Show us something we've never seen before — the project judges can't forget.</div>
-                  <span class="atc-badge">Grand Prize</span>
-                </div>
-              </div>
-              <div class="about-track-card">
-                <div class="atc-inner">
-                  <div class="atc-num">Track 02</div>
-                  <div class="atc-icon">◎</div>
-                  <div class="atc-title">Best AI/ML</div>
-                  <div class="atc-body">Fine-tuned models, novel architectures — build something that actually thinks.</div>
-                </div>
-              </div>
-              <div class="about-track-card">
-                <div class="atc-inner">
-                  <div class="atc-num">Track 03</div>
-                  <div class="atc-icon">⬡</div>
-                  <div class="atc-title">Best Defense</div>
-                  <div class="atc-body">Hack it before they do. Cybersecurity that actually matters in the real world.</div>
-                </div>
-              </div>
-            </div>
-        
-            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;width:100%;">
-              <div class="about-track-card">
-                <div class="atc-inner">
-                  <div class="atc-num">Track 04</div>
-                  <div class="atc-icon">◈</div>
-                  <div class="atc-title">Best Web/App</div>
-                  <div class="atc-body">Ship something people want to use. If it runs and solves a problem, we want to see it.</div>
-                </div>
-              </div>
-              <div class="about-track-card">
-                <div class="atc-inner">
-                  <div class="atc-num">Track 05</div>
-                  <div class="atc-icon">✦</div>
-                  <div class="atc-title">Best Newcomer</div>
-                  <div class="atc-body">First hackathon? This award celebrates first-timers who show up and build something real.</div>
-                </div>
-              </div>
-            </div>
-        
+      <div class="section" data-idx="1">
+        <div class="about-inner">
+          <div class="about-title">ABOUT GREENCODE</div>
+          <p class="about-body">GreenCode is a 10 hour sprint for students who love to build things. We are bringing people together to see what can be made when you stop talking and start coding. Our goal is simple. We want to see what happens when you have 10 hours, a great environment, and no distractions to create something real.</p>
+          <div class="about-tagline">ONE DAY. ONE PROJECT. EVERYTHING YOU NEED TO MAKE IT REAL.</div>
+          <div class="stat-row">
+            <div class="stat-box"><div class="stat-val">10</div><div class="stat-lbl">Hours</div></div>
+            <div class="stat-box"><div class="stat-val">$1000+</div><div class="stat-lbl">In Prizes</div></div>
+            <div class="stat-box"><div class="stat-val">35</div><div class="stat-lbl">Hackers</div></div>
           </div>
         </div>
+      </div>
   
       <!-- SPONSORS 2 -->
       <div class="section" data-idx="2">
@@ -1270,36 +1158,7 @@
       setTimeout(() => { document.body.style.transform = 'translate(-1px,1px)'; }, 110);
       setTimeout(() => { document.body.style.transform = ''; fl.remove(); glitchActive = false; }, 160);
     }, 15000);
-
-    // ABOUT — mouse glow for stat boxes and track cards
-    document.querySelectorAll('.about-stat-box').forEach(el => {
-      el.addEventListener('mousemove', e => {
-        const r = el.getBoundingClientRect();
-        el.style.setProperty('--smx', ((e.clientX-r.left)/r.width*100).toFixed(1)+'%');
-        el.style.setProperty('--smy', ((e.clientY-r.top)/r.height*100).toFixed(1)+'%');
-      });
-      el.addEventListener('click', () => {
-        el.style.transform='scale(1.08) translateY(-4px)';
-        setTimeout(()=>el.style.transform='',300);
-      });
-    });
-
-    document.querySelectorAll('.about-track-card').forEach(el => {
-      el.addEventListener('mousemove', e => {
-        const r = el.getBoundingClientRect();
-        el.style.setProperty('--tmx', ((e.clientX-r.left)/r.width*100).toFixed(1)+'%');
-        el.style.setProperty('--tmy', ((e.clientY-r.top)/r.height*100).toFixed(1)+'%');
-      });
-      el.addEventListener('click', e => {
-        const r = el.getBoundingClientRect();
-        const rip = document.createElement('span');
-        rip.style.cssText = `position:absolute;border-radius:50%;background:rgba(24,201,93,0.25);width:10px;height:10px;left:${e.clientX-r.left-5}px;top:${e.clientY-r.top-5}px;animation:atcRipple .5s ease-out forwards;pointer-events:none;z-index:2;`;
-        el.appendChild(rip); setTimeout(()=>rip.remove(),500);
-      });
-    });
-
-})(); // <--- Эта строка закрывает всё, что было выше
-</script>
+  
   })();
     </script>
   </body>
