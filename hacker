@@ -64,23 +64,36 @@
         .tc{border:1px solid rgba(24,201,93,.14);background:rgba(24,201,93,.03);border-radius:16px;height:148px;cursor:none;position:relative;perspective:800px;}
         .tc:hover .tc-fw{border-color:rgba(24,201,93,.45);background:rgba(24,201,93,.07);box-shadow:0 6px 20px rgba(24,201,93,.12);}
         .tc:hover .tc-icon{background:rgba(24,201,93,.22);transform:scale(1.15) rotate(-5deg);}
-        .tc-flipper{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.4,0,.2,1);border-radius:16px;}
+        .tc-flipper{
+          width:100%;height:100%;
+          position:relative;
+          transform-style:preserve-3d;
+          -webkit-transform-style:preserve-3d;
+          transition:transform .45s cubic-bezier(.4,0,.2,1);
+          border-radius:16px;
+        }
+        .tc.flipped .tc-flipper{
+          transform:rotateY(180deg);
+          -webkit-transform:rotateY(180deg);
+        }
         .tc-fw,.tc-bw{
           position:absolute;inset:0;border-radius:16px;
           backface-visibility:hidden;
           -webkit-backface-visibility:hidden;
           padding:13px 15px;
-          -webkit-transform:rotateY(0deg);
-          transform:rotateY(0deg);
         }
-        .tc { transform-style: preserve-3d; }
-        .tc-fw,.tc-bw{position:absolute;inset:0;border-radius:16px;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:13px 15px;}
-        .tc-fw{border:1px solid rgba(24,201,93,.14);background:rgba(24,201,93,.03);transition:border-color .25s,background .25s,box-shadow .25s;}
+        .tc-fw{
+          border:1px solid rgba(24,201,93,.14);
+          background:rgba(24,201,93,.03);
+          transition:border-color .25s,background .25s,box-shadow .25s;
+          transform:rotateY(0deg);
+          -webkit-transform:rotateY(0deg);
+        }
         .tc-bw{
           background:rgba(24,201,93,.07);
           border:1px solid rgba(24,201,93,.35);
-          -webkit-transform:rotateY(180deg);
           transform:rotateY(180deg);
+          -webkit-transform:rotateY(180deg);
           display:flex;flex-direction:column;
           align-items:center;justify-content:center;gap:2px;
         }
@@ -95,6 +108,17 @@
         .tc-bh{font-family:'Space Mono',monospace;font-size:8px;color:var(--gray2);margin-top:6px;letter-spacing:.08em;}
         .tracks-top{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;margin-bottom:10px;}
         .tracks-bot{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;width:100%;}
+
+        /* добавь сюда */
+        .atm-row{
+          display:flex;align-items:center;justify-content:space-between;
+          background:rgba(24,201,93,.05);
+          border:1px solid rgba(24,201,93,.14);
+          border-radius:10px;padding:10px 14px;
+        }
+        .atm-num{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.12em;color:var(--gray2);text-transform:uppercase;min-width:70px;}
+        .atm-name{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.06em;color:var(--black);flex:1;text-align:center;}
+        .atm-prize{font-family:'Anton',sans-serif;font-size:20px;color:var(--black);letter-spacing:.02em;}
 
 
       /* ABOUT */
@@ -220,45 +244,40 @@
       @keyframes sb{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
   
       @media(max-width:640px){
-        #topnav{padding:10px 12px;}#topnav ul{padding:4px 6px;gap:0;}
-        .nav-link{display:none;}.nav-sep{display:none;}.nav-logo{padding:2px 6px;}.nav-cta{padding:6px 14px;font-size:9px;}
-        .home-inner{padding:0 20px;}.countdown-wrap{gap:6px;}.cd-block{padding:8px 10px;min-width:56px;}
-        .cd-sub{font-size:9px;gap:5px;flex-wrap:wrap;justify-content:flex-start;}
-        .about-inner,.sponsors-inner,.faq-inner,.signup-inner{padding:0 20px;}
-        .about-title,.sponsors-title,.faq-title,.location-title,.ph-t{font-size:clamp(36px,10vw,56px);}
-        .stat-row{flex-direction:column;gap:10px;align-items:stretch;}.stat-box{min-width:unset;padding:14px 20px;}.stat-val{font-size:32px;}
-        .faq-grid{grid-template-columns:1fr;}.signup-btn{padding:12px 24px;font-size:10px;}
-        /* Contact отступ снизу чтоб footer не перекрывал */
-        .contact-inner{padding:0 20px 160px;}
-        .contact-box{padding:18px;width:100%;}
-        /* Footer чуть меньше */
-        #footer{width:calc(100% - 16px);padding:16px 18px;}
-        .footer-top{flex-direction:column;gap:10px;align-items:flex-start;}
-        .footer-links{flex-direction:column;gap:6px;}
-        .footer-bottom{flex-direction:column;gap:8px;padding-top:10px;}
-        .hcb-badge{align-self:flex-start;}
-        /* Location скролл внутри секции на мобильном */
-        .location-inner{padding:0 16px;width:100%;}
-        .location-title{font-size:clamp(36px,10vw,56px);margin-bottom:14px;}
-        .section[data-idx="4"]{align-items:flex-start;padding-top:72px;overflow-y:auto;}
-        .location-layout{grid-template-columns:1fr;gap:10px;}
-        .location-detail-row{flex-direction:row;gap:8px;}
-        .location-addr-box{padding:16px 18px;}
-        .location-addr-name{font-size:18px;}
-        .location-detail{padding:10px 12px;}
-        .map-box{height:180px;}
-        .map-box.expanded{height:280px;}
-        #sec-counter{right:16px;}
-        .about-new-inner{padding:0 16px;}
-        .about-new-title{font-size:clamp(32px,9vw,48px);}
-        .section[data-idx="1"]{align-items:flex-start;padding-top:68px;overflow-y:auto;}
-        .tracks-top{grid-template-columns:1fr 1fr;gap:8px;}
-        .tracks-bot{grid-template-columns:1fr 1fr;gap:8px;}
-        .tc{height:160px;}
-        .tc-fw h3{font-size:9px;}
-        .tc-fw p{font-size:10px;}
-        .tc-bp{font-size:28px;}
-      }
+      #topnav{padding:10px 12px;}#topnav ul{padding:4px 6px;gap:0;}
+      .nav-link{display:none;}.nav-sep{display:none;}.nav-logo{padding:2px 6px;}.nav-cta{padding:6px 14px;font-size:9px;}
+      .home-inner{padding:0 20px;}.countdown-wrap{gap:6px;}.cd-block{padding:8px 10px;min-width:56px;}
+      .cd-sub{font-size:9px;gap:5px;flex-wrap:wrap;justify-content:flex-start;}
+      .about-inner,.sponsors-inner,.faq-inner,.signup-inner{padding:0 20px;}
+      .about-title,.sponsors-title,.faq-title,.location-title,.ph-t{font-size:clamp(36px,10vw,56px);}
+      .stat-row{flex-direction:column;gap:10px;align-items:stretch;}.stat-box{min-width:unset;padding:14px 20px;}.stat-val{font-size:32px;}
+      .faq-grid{grid-template-columns:1fr;}.signup-btn{padding:12px 24px;font-size:10px;}
+      .contact-inner{padding:0 20px 160px;}
+      .contact-box{padding:18px;width:100%;}
+      #footer{width:calc(100% - 16px);padding:16px 18px;}
+      .footer-top{flex-direction:column;gap:10px;align-items:flex-start;}
+      .footer-links{flex-direction:column;gap:6px;}
+      .footer-bottom{flex-direction:column;gap:8px;padding-top:10px;}
+      .hcb-badge{align-self:flex-start;}
+      .location-inner{padding:0 16px;width:100%;}
+      .location-title{font-size:clamp(36px,10vw,56px);margin-bottom:14px;}
+      .section[data-idx="4"]{align-items:flex-start;padding-top:72px;overflow-y:auto;}
+      .location-layout{grid-template-columns:1fr;gap:10px;}
+      .location-detail-row{flex-direction:row;gap:8px;}
+      .location-addr-box{padding:16px 18px;}
+      .location-addr-name{font-size:18px;}
+      .location-detail{padding:10px 12px;}
+      .map-box{height:180px;}
+      .map-box.expanded{height:280px;}
+      #sec-counter{right:16px;}
+    
+      /* ABOUT mobile */
+      .about-new-inner{padding:0 16px;}
+      .about-new-title{font-size:clamp(32px,9vw,48px);}
+      .section[data-idx="1"]{align-items:flex-start;padding-top:68px;overflow-y:auto;}
+      .tracks-top,.tracks-bot{display:none;}
+      .about-tracks-mobile{display:flex !important;}
+    }
 
     </style>
   </head>
@@ -416,6 +435,15 @@
               </div>
         
             </div>
+              
+            <div class="about-tracks-mobile" style="display:none;flex-direction:column;gap:10px;width:100%;margin-top:4px;">
+              <div class="atm-row"><span class="atm-num">Main Prize</span><span class="atm-name">★ Best Overall</span><span class="atm-prize">$350</span></div>
+              <div class="atm-row"><span class="atm-num">Track 02</span><span class="atm-name">◎ Best AI/ML</span><span class="atm-prize">$200</span></div>
+              <div class="atm-row"><span class="atm-num">Track 03</span><span class="atm-name">⬡ Best Defense</span><span class="atm-prize">$200</span></div>
+              <div class="atm-row"><span class="atm-num">Track 04</span><span class="atm-name">◈ Best Web/App</span><span class="atm-prize">$200</span></div>
+              <div class="atm-row"><span class="atm-num">Prize</span><span class="atm-name">✦ Best Newcomer</span><span class="atm-prize">$100</span></div>
+            </div>
+
         
           </div>
         </div>
@@ -957,6 +985,10 @@
         .tc-fw,.tc-bw { background:rgba(24,201,93,0.05) !important; border-color:rgba(24,201,93,0.18) !important; }
         .tc-num { color:rgba(24,201,93,0.35) !important; }
         .tc-bp { color:#18c95d !important; }
+        .atm-row { background:rgba(24,201,93,0.05) !important; border-color:rgba(24,201,93,0.18) !important; }
+        .atm-name { color:#18c95d !important; }
+        .atm-num { color:rgba(24,201,93,0.35) !important; }
+        .atm-prize { color:#18c95d !important; }
       `;
       document.head.appendChild(st);
     }
