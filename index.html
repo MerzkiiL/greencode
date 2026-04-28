@@ -52,7 +52,36 @@
       .btn-fill:hover{background:var(--g);border-color:var(--g);transform:translateY(-2px);box-shadow:0 6px 20px rgba(24,201,93,.25);}
       .btn-line{background:transparent;color:var(--black);border-color:rgba(13,20,16,.18);}
       .btn-line:hover{border-color:var(--g);color:var(--g2);transform:translateY(-2px);}
-  
+
+      /* ABOUT NEW */
+        .about-new-inner{max-width:860px;width:100%;padding:0 48px;text-align:center;display:flex;flex-direction:column;align-items:center;}
+        .about-new-title{font-family:'Anton',sans-serif;font-size:clamp(38px,6vw,72px);color:var(--black);letter-spacing:.02em;text-transform:uppercase;line-height:.92;margin-bottom:12px;}
+        .about-new-body{font-family:'DM Sans',sans-serif;font-size:clamp(13px,1.3vw,15px);font-weight:300;line-height:1.7;color:var(--gray);margin-bottom:8px;max-width:560px;}
+        .about-new-tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--g2);margin-bottom:16px;}
+        .about-new-divider{border:none;border-top:1px solid rgba(24,201,93,.12);width:100%;margin-bottom:14px;}
+        .about-new-hdr h2{font-family:'Anton',sans-serif;font-size:clamp(24px,3vw,32px);color:var(--black);letter-spacing:.02em;text-transform:uppercase;}
+        .about-new-hdr p{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:300;color:var(--gray);margin-top:4px;margin-bottom:14px;}
+        .tc{border:1px solid rgba(24,201,93,.14);background:rgba(24,201,93,.03);border-radius:16px;height:148px;cursor:none;position:relative;perspective:800px;}
+        .tc:hover .tc-fw{border-color:rgba(24,201,93,.45);background:rgba(24,201,93,.07);box-shadow:0 6px 20px rgba(24,201,93,.12);}
+        .tc:hover .tc-icon{background:rgba(24,201,93,.22);transform:scale(1.15) rotate(-5deg);}
+        .tc-flipper{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.4,0,.2,1);border-radius:16px;}
+        .tc.flipped .tc-flipper{transform:rotateY(180deg);}
+        .tc-fw,.tc-bw{position:absolute;inset:0;border-radius:16px;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:13px 15px;}
+        .tc-fw{border:1px solid rgba(24,201,93,.14);background:rgba(24,201,93,.03);transition:border-color .25s,background .25s,box-shadow .25s;}
+        .tc-bw{background:rgba(24,201,93,.07);border:1px solid rgba(24,201,93,.35);transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;}
+        .tc-num{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.14em;color:var(--gray2);text-transform:uppercase;margin-bottom:6px;}
+        .tc-icon{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;font-size:12px;background:rgba(24,201,93,.1);color:var(--g2);transition:background .25s,transform .3s cubic-bezier(.34,1.56,.64,1);}
+        .tc-fw h3{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--black);margin-bottom:4px;}
+        .tc-fw p{font-size:11px;font-weight:300;color:var(--gray);line-height:1.5;}
+        .tc-badge{display:inline-block;font-family:'Space Mono',monospace;font-size:7px;letter-spacing:.1em;text-transform:uppercase;background:rgba(24,201,93,.15);color:#0d6e36;border-radius:20px;padding:2px 7px;margin-top:5px;}
+        .tc-bl{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.14em;color:var(--gray);text-transform:uppercase;}
+        .tc-bp{font-family:'Anton',sans-serif;font-size:36px;color:var(--black);letter-spacing:.02em;line-height:1.1;}
+        .tc-bs{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.1em;color:var(--g2);text-transform:uppercase;}
+        .tc-bh{font-family:'Space Mono',monospace;font-size:8px;color:var(--gray2);margin-top:6px;letter-spacing:.08em;}
+        .tracks-top{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;margin-bottom:10px;}
+        .tracks-bot{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;width:100%;}
+
+
       /* ABOUT */
       .about-inner{max-width:800px;padding:0 48px;text-align:center;}
       .about-title{font-family:'Anton',sans-serif;font-size:clamp(52px,9vw,110px);color:var(--black);letter-spacing:.02em;margin-bottom:24px;text-transform:uppercase;}
@@ -255,18 +284,116 @@
       </div>
   
       <!-- ABOUT 1 -->
-      <div class="section" data-idx="1">
-        <div class="about-inner">
-          <div class="about-title">ABOUT GREENCODE</div>
-          <p class="about-body">GreenCode is a 10 hour sprint for students who love to build things. We are bringing people together to see what can be made when you stop talking and start coding. Our goal is simple. We want to see what happens when you have 10 hours, a great environment, and no distractions to create something real.</p>
-          <div class="about-tagline">ONE DAY. ONE PROJECT. EVERYTHING YOU NEED TO MAKE IT REAL.</div>
-          <div class="stat-row">
-            <div class="stat-box"><div class="stat-val">10</div><div class="stat-lbl">Hours</div></div>
-            <div class="stat-box"><div class="stat-val">$1000+</div><div class="stat-lbl">In Prizes</div></div>
-            <div class="stat-box"><div class="stat-val">35</div><div class="stat-lbl">Hackers</div></div>
+        <div class="section" data-idx="1">
+          <div class="about-new-inner">
+        
+            <div class="about-new-title">ABOUT GREENCODE</div>
+            <p class="about-new-body">GreenCode is a 10 hour sprint for students who love to build things. We are bringing people together to see what can be made when you stop talking and start coding. Our goal is simple — 10 hours, a great environment, no distractions.</p>
+            <div class="about-new-tag">Greenville's first hackathon — led by high schoolers, for high schoolers.</div>
+        
+            <hr class="about-new-divider">
+        
+            <div class="about-new-hdr">
+              <h2>Five ways to win.</h2>
+              <p>Every project competes for the Main Prize and Best Newcomer prize too.</p>
+            </div>
+        
+            <div class="tracks-top">
+        
+              <div class="tc">
+                <div class="tc-flipper">
+                  <div class="tc-fw">
+                    <div class="tc-num">Main Prize</div>
+                    <div class="tc-icon">★</div>
+                    <h3>Best Overall</h3>
+                    <p>The grand prize. The project judges can't forget.</p>
+                    <span class="tc-badge">Grand Prize</span>
+                  </div>
+                  <div class="tc-bw">
+                    <div class="tc-bl">Grand Prize</div>
+                    <div class="tc-bp">$350</div>
+                    <div class="tc-bs">in prizes</div>
+                    <div class="tc-bh">tap to flip back</div>
+                  </div>
+                </div>
+              </div>
+        
+              <div class="tc">
+                <div class="tc-flipper">
+                  <div class="tc-fw">
+                    <div class="tc-num">Track 02</div>
+                    <div class="tc-icon">◎</div>
+                    <h3>Best AI/ML</h3>
+                    <p>Fine-tuned models, novel architectures — build something that thinks.</p>
+                  </div>
+                  <div class="tc-bw">
+                    <div class="tc-bl">Category Prize</div>
+                    <div class="tc-bp">$200</div>
+                    <div class="tc-bs">in prizes</div>
+                    <div class="tc-bh">tap to flip back</div>
+                  </div>
+                </div>
+              </div>
+        
+              <div class="tc">
+                <div class="tc-flipper">
+                  <div class="tc-fw">
+                    <div class="tc-num">Track 03</div>
+                    <div class="tc-icon">⬡</div>
+                    <h3>Best Defense</h3>
+                    <p>Hack it before they do. Cybersecurity that matters in the real world.</p>
+                  </div>
+                  <div class="tc-bw">
+                    <div class="tc-bl">Category Prize</div>
+                    <div class="tc-bp">$200</div>
+                    <div class="tc-bs">in prizes</div>
+                    <div class="tc-bh">tap to flip back</div>
+                  </div>
+                </div>
+              </div>
+        
+            </div>
+        
+            <div class="tracks-bot">
+        
+              <div class="tc">
+                <div class="tc-flipper">
+                  <div class="tc-fw">
+                    <div class="tc-num">Track 04</div>
+                    <div class="tc-icon">◈</div>
+                    <h3>Best Web/App</h3>
+                    <p>Ship something people want to use. If it runs and solves a problem, we want to see it.</p>
+                  </div>
+                  <div class="tc-bw">
+                    <div class="tc-bl">Category Prize</div>
+                    <div class="tc-bp">$200</div>
+                    <div class="tc-bs">in prizes</div>
+                    <div class="tc-bh">tap to flip back</div>
+                  </div>
+                </div>
+              </div>
+        
+              <div class="tc">
+                <div class="tc-flipper">
+                  <div class="tc-fw">
+                    <div class="tc-num">Prize</div>
+                    <div class="tc-icon">✦</div>
+                    <h3>Best Newcomer</h3>
+                    <p>First hackathon? This prize celebrates first-timers who show up and build.</p>
+                  </div>
+                  <div class="tc-bw">
+                    <div class="tc-bl">Newcomer Prize</div>
+                    <div class="tc-bp">$100</div>
+                    <div class="tc-bs">in prizes</div>
+                    <div class="tc-bh">tap to flip back</div>
+                  </div>
+                </div>
+              </div>
+        
+            </div>
+        
           </div>
         </div>
-      </div>
   
       <!-- SPONSORS 2 -->
       <div class="section" data-idx="2">
@@ -708,6 +835,9 @@
       const st = document.createElement('style');
       st.id = 'gc-hacker-theme';
       st.textContent = `
+
+        
+        
         body { background:#0a0f0b !important; color:#18c95d !important; transition:background 0.7s ease; }
         #bg  { background:#0a0f0b !important; }
         .mesh { opacity:0.04 !important; }
@@ -796,6 +926,12 @@
         /* Scroll hint */
         .sc-h span { color:rgba(24,201,93,0.5) !important; }
         .sc-h .sc-line { background:linear-gradient(to bottom,#18c95d,transparent) !important; }
+
+        .tc-fw h3,.tc-bl,.tc-bh { color:#18c95d !important; }
+        .tc-fw p,.tc-bs { color:rgba(24,201,93,0.55) !important; }
+        .tc-fw,.tc-bw { background:rgba(24,201,93,0.05) !important; border-color:rgba(24,201,93,0.18) !important; }
+        .tc-num { color:rgba(24,201,93,0.35) !important; }
+        .tc-bp { color:#18c95d !important; }
       `;
       document.head.appendChild(st);
     }
@@ -1158,6 +1294,11 @@
       setTimeout(() => { document.body.style.transform = 'translate(-1px,1px)'; }, 110);
       setTimeout(() => { document.body.style.transform = ''; fl.remove(); glitchActive = false; }, 160);
     }, 15000);
+
+    // ABOUT track cards flip
+    document.querySelectorAll('.tc').forEach(el=>{
+      el.addEventListener('click',()=>el.classList.toggle('flipped'));
+    });
   
   })();
     </script>
