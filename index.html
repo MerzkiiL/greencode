@@ -65,7 +65,8 @@
         .tc:hover .tc-fw{border-color:rgba(24,201,93,.45);background:rgba(24,201,93,.07);box-shadow:0 6px 20px rgba(24,201,93,.12);}
         .tc:hover .tc-icon{background:rgba(24,201,93,.22);transform:scale(1.15) rotate(-5deg);}
         .tc-flipper{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.4,0,.2,1);border-radius:16px;}
-        .tc.flipped .tc-flipper{transform:rotateY(180deg);}
+        .tc-fw { transform: rotateY(0deg); }
+        .tc { transform-style: preserve-3d; }
         .tc-fw,.tc-bw{position:absolute;inset:0;border-radius:16px;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:13px 15px;}
         .tc-fw{border:1px solid rgba(24,201,93,.14);background:rgba(24,201,93,.03);transition:border-color .25s,background .25s,box-shadow .25s;}
         .tc-bw{background:rgba(24,201,93,.07);border:1px solid rgba(24,201,93,.35);transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;}
@@ -244,6 +245,8 @@
         .tc-fw p{font-size:10px;}
         .tc-bp{font-size:28px;}
       }
+
+        .tc * { -webkit-transform-style: preserve-3d; }
     </style>
   </head>
   <body>
@@ -298,7 +301,7 @@
         
             <div class="about-new-title">ABOUT GREENCODE</div>
             <p class="about-new-body">GreenCode is a 10 hour sprint for students who love to build things. We are bringing people together to see what can be made when you stop talking and start coding. Our goal is simple — 10 hours, a great environment, no distractions.</p>
-            <div class="about-new-tag">Greenville's first hackathon — led by high schoolers, for high schoolers.</div>
+            <div class="about-new-tag">The first Hackathon led by high schoolers in Greenville</div>
         
             <hr class="about-new-divider">
         
