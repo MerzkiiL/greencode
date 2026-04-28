@@ -728,9 +728,9 @@
    
         const isMobile = window.innerWidth < 640;
         // На мобильном частицы тише меньше и прозрачнее
-        const OPACITY_BASE = isMobile ? 0.03 : 0.06;
-        const OPACITY_RANGE = isMobile ? 0.05 : 0.10;
-        const EDGE_BOOST = isMobile ? 0.08 : 0.18;
+        const OPACITY_BASE = isMobile ? 0.03 : 0.18;
+        const OPACITY_RANGE = isMobile ? 0.05 : 0.15;
+        const EDGE_BOOST = isMobile ? 0.08 : 0.35;
    
         function pResize(){ pCanvas.width = window.innerWidth; pCanvas.height = window.innerHeight; }
         pResize(); window.addEventListener('resize', pResize);
