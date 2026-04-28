@@ -234,6 +234,15 @@
         .map-box{height:180px;}
         .map-box.expanded{height:280px;}
         #sec-counter{right:16px;}
+        .about-new-inner{padding:0 16px;}
+        .about-new-title{font-size:clamp(32px,9vw,48px);}
+        .section[data-idx="1"]{align-items:flex-start;padding-top:68px;overflow-y:auto;}
+        .tracks-top{grid-template-columns:1fr 1fr;gap:8px;}
+        .tracks-bot{grid-template-columns:1fr 1fr;gap:8px;}
+        .tc{height:160px;}
+        .tc-fw h3{font-size:9px;}
+        .tc-fw p{font-size:10px;}
+        .tc-bp{font-size:28px;}
       }
     </style>
   </head>
@@ -1295,12 +1304,14 @@
       setTimeout(() => { document.body.style.transform = ''; fl.remove(); glitchActive = false; }, 160);
     }, 15000);
 
-    // ABOUT track cards flip
+   
+  
+  })();
+    
+        // ABOUT track cards flip
     document.querySelectorAll('.tc').forEach(el=>{
       el.addEventListener('click',()=>el.classList.toggle('flipped'));
     });
-  
-  })();
     </script>
   </body>
   </html>
