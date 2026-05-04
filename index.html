@@ -580,10 +580,12 @@
         const iconSvg = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1" fill="rgba(122,148,134,0.5)"/><rect x="14" y="3" width="7" height="7" rx="1" fill="rgba(122,148,134,0.5)"/><rect x="3" y="14" width="7" height="7" rx="1" fill="rgba(122,148,134,0.5)"/><rect x="14" y="14" width="7" height="7" rx="1" fill="rgba(122,148,134,0.5)"/></svg>`;
       
         
+        const XYZ_IMG = '/xyz-logo-color.png'; // положи файл в корень сайта
+
         const slots = [
           { type: 'real', svg: BRC_SVG, url: 'https://www.blueridge.cx/' }, 
           { type: 'real-img', src: '/wolfram-corporate-logo-stacked-sm.png', name: 'Wolfram', url: 'https://www.wolfram.com/' },
-          { type: 'placeholder' },
+          { type: 'real-img', src: XYZ_IMG, name: '.XYZ', url: 'https://gen.xyz/' },
           { type: 'placeholder' },
           { type: 'placeholder' },
           { type: 'placeholder' },
