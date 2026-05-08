@@ -587,8 +587,8 @@
           { type: 'real', svg: BRC_SVG, url: 'https://www.blueridge.cx/' }, 
           { type: 'real-img', src: '/wolfram-corporate-logo-stacked-sm.png', name: 'Wolfram', url: 'https://www.wolfram.com/' },
           { type: 'real-img', src: '/xyz-logo-color.png', name: '.XYZ', url: 'https://gen.xyz/' },
-          { type: 'real-img', src: '/fuel_logo_transparent.png', name: 'Fuel Training Consultants', url: 'https://www.consultwithfuel.com/', imgSize: '130px', bgColor: 'rgba(30,30,30,0.85)', borderColor: 'rgba(212,160,23,0.4)' },
-          { type: 'real-img', src: '/stem_logo_transparent.png', name: 'STEM Search Group', url: 'https://stemsearchgroup.com/' },
+          { type: 'real-img', src: '/fuel_logo_transparent.png', name: 'Fuel Training Consultants', url: 'https://www.consultwithfuel.com/', imgSize: '130px', bgColor: 'rgba(30,30,30,0.85)', borderColor: 'rgba(212,160,23,0.85)' },
+          { type: 'real-img', src: '/stem_logo_transparent.png', name: 'STEM Search Group', url: 'https://stemsearchgroup.com/', imgSize: '136px' },
           { type: 'placeholder' },
           { type: 'placeholder' },
         ];
@@ -609,13 +609,14 @@
             } else if(s.type === 'real-img'){
               const bg = s.bgColor || 'rgba(255,255,255,0.06)';
               const border = s.borderColor || 'rgba(180,180,180,0.3)';
+              const visitColor = s.bgColor ? 'rgba(255,255,255,0.5)' : 'rgba(122,148,134,0.5)';
               slot.style.cssText = `border-color:${border};background:${bg};cursor:pointer;`;
               const shine = document.createElement('div'); shine.className = 'sp-shine'; slot.appendChild(shine);
               const link = document.createElement('a');
               link.href = s.url; link.target = '_blank'; link.rel = 'noopener noreferrer';
               link.style.cssText = 'display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;text-decoration:none;';
               const size = s.imgSize || '68px';
-              link.innerHTML = `<div class="sp-icon-wrap"><img src="${s.src}" alt="${s.name}" style="max-width:${size};max-height:${size};object-fit:contain;"></div><div class="sp-visit">Visit site →</div>`;
+              link.innerHTML = `<div class="sp-icon-wrap"><img src="${s.src}" alt="${s.name}" style="max-width:${size};max-height:56px;object-fit:contain;"></div><div class="sp-visit" style="color:${visitColor}">Visit site →</div>`;
               slot.appendChild(link);
             } else {
               slot.innerHTML = `<div class="sponsor-slot-icon">${iconSvg}</div><div class="sponsor-slot-text">Your logo<br>could be here</div>`;
