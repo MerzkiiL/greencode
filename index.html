@@ -616,7 +616,7 @@
               link.href = s.url; link.target = '_blank'; link.rel = 'noopener noreferrer';
               link.style.cssText = 'display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;text-decoration:none;';
               const size = s.imgSize || '68px';
-              link.innerHTML = `<div class="sp-icon-wrap"><img src="${s.src}" alt="${s.name}" style="max-width:${size};max-height:56px;object-fit:contain;"></div><div class="sp-visit" style="color:${visitColor}">Visit site →</div>`;
+              link.innerHTML = `<div class="sp-icon-wrap"><img src="${s.src}" alt="${s.name}" style="max-width:${size};max-height:${size};object-fit:contain;"></div><div class="sp-visit" style="color:${visitColor}">Visit site →</div>`;
               slot.appendChild(link);
             } else {
               slot.innerHTML = `<div class="sponsor-slot-icon">${iconSvg}</div><div class="sponsor-slot-text">Your logo<br>could be here</div>`;
