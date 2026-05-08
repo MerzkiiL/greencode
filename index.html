@@ -213,7 +213,7 @@
       .sponsor-slot:hover{border-color:rgba(24,201,93,.45);transform:translateY(-3px);}
       .sp-shine{position:absolute;inset:0;border-radius:14px;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(24,201,93,.13) 0%,transparent 65%);opacity:0;transition:opacity .25s;pointer-events:none;}
       .sponsor-slot:hover .sp-shine{opacity:1;}
-      .sp-visit{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(122,148,134,0.5);margin-top:6px;transition:color .25s,transform .25s;transform:translateY(0);}
+      .sp-visit{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;margin-top:6px;transition:color .25s;transform:translateY(0);}
       .sponsor-slot:hover .sp-visit{color:rgba(24,201,93,.55);transform:translateY(0);}
       .sp-icon-wrap{transition:transform .3s cubic-bezier(.34,1.56,.64,1);}
       .sponsor-slot:hover .sp-icon-wrap{transform:scale(1.08);}
@@ -616,7 +616,7 @@
               link.href = s.url; link.target = '_blank'; link.rel = 'noopener noreferrer';
               link.style.cssText = 'display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;text-decoration:none;';
               const size = s.imgSize || '68px';
-              link.innerHTML = `<div class="sp-icon-wrap"><img src="${s.src}" alt="${s.name}" style="max-width:${size};max-height:${size};object-fit:contain;"></div><div class="sp-visit" style="color:${visitColor}">Visit site →</div>`;
+              link.innerHTML = `<div class="sp-icon-wrap"><img src="${s.src}" alt="${s.name}" style="max-width:${size};max-height:60px;object-fit:contain;"></div><div class="sp-visit" style="color:${visitColor}">Visit site →</div>`;
               slot.appendChild(link);
             } else {
               slot.innerHTML = `<div class="sponsor-slot-icon">${iconSvg}</div><div class="sponsor-slot-text">Your logo<br>could be here</div>`;
